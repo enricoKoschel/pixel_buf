@@ -1,0 +1,11 @@
+[package]
+name = "pixel_buf"
+version = "0.1.0"
+edition = "2021"
+authors = ["Enrico Koschel"]
+license = "MIT"
+description = "Small (and bad) library for pixel buffer manipulation"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
