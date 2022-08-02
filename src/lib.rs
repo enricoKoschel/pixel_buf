@@ -5,7 +5,7 @@ extern crate alloc;
 use alloc::vec;
 use alloc::vec::Vec;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub struct Rgba {
 	pub r: u8,
 	pub g: u8,
@@ -146,7 +146,7 @@ impl PixelBuf {
 
 	pub fn clear(&mut self, color: Rgba) {
 		for pixel in &mut self.pixels {
-			*pixel = color.clone();
+			*pixel = color;
 		}
 	}
 }
