@@ -5,12 +5,23 @@ extern crate alloc;
 use alloc::vec;
 use alloc::vec::Vec;
 
-#[derive(Default, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub struct Rgba {
 	pub r: u8,
 	pub g: u8,
 	pub b: u8,
 	pub a: u8,
+}
+
+impl Default for Rgba {
+	fn default() -> Self {
+		Rgba {
+			r: 0,
+			g: 0,
+			b: 0,
+			a: 255,
+		}
+	}
 }
 
 #[derive(Clone)]
@@ -20,6 +31,7 @@ pub struct PixelBuf {
 }
 
 impl From<[u8; 4]> for Rgba {
+	#[must_use]
 	fn from(array: [u8; 4]) -> Self {
 		Self {
 			r: array[0],
@@ -31,8 +43,17 @@ impl From<[u8; 4]> for Rgba {
 }
 
 impl Rgba {
+	#[must_use]
 	pub fn new(r: u8, g: u8, b: u8, a: u8) -> Self {
 		Self { r, g, b, a }
+	}
+
+	pub fn black() -> Self {
+		Self::new(0, 0, 0, 255)
+	}
+
+	pub fn white() -> Self {
+		Self::new(255, 255, 255, 255)
 	}
 }
 
@@ -62,6 +83,7 @@ impl PixelBuf {
 		buf
 	}
 
+	#[must_use]
 	pub fn new_test_image(size: [usize; 2]) -> Self {
 		Self::new_from_fn(size, |x, y| match (x + y) % 4 {
 			0 => Rgba::new(0, 0, 0, 255),
@@ -81,6 +103,7 @@ impl PixelBuf {
 		self[(x, y)] = color;
 	}
 
+	#[must_use]
 	pub fn is_in_bounds(&self, x: usize, y: usize) -> bool {
 		x < self.size[0] && y < self.size[1]
 	}
@@ -90,6 +113,7 @@ impl PixelBuf {
 		[self.size[0] * scale, self.size[1] * scale]
 	}
 
+	#[must_use]
 	pub fn get_size(&self) -> [usize; 2] {
 		self.size
 	}
@@ -119,11 +143,18 @@ impl PixelBuf {
 
 		pixels
 	}
+
+	pub fn clear(&mut self, color: Rgba) {
+		for pixel in &mut self.pixels {
+			*pixel = color.clone();
+		}
+	}
 }
 
 impl core::ops::Index<(usize, usize)> for PixelBuf {
 	type Output = Rgba;
 
+	#[must_use]
 	fn index(&self, index: (usize, usize)) -> &Self::Output {
 		let (x, y) = index;
 
@@ -138,6 +169,7 @@ impl core::ops::Index<(usize, usize)> for PixelBuf {
 }
 
 impl core::ops::IndexMut<(usize, usize)> for PixelBuf {
+	#[must_use]
 	fn index_mut(&mut self, index: (usize, usize)) -> &mut Self::Output {
 		let (x, y) = index;
 
