@@ -14,6 +14,7 @@ pub struct Rgba {
 }
 
 impl Default for Rgba {
+	#[inline]
 	fn default() -> Self {
 		Rgba {
 			r: 0,
@@ -31,6 +32,7 @@ pub struct PixelBuf {
 }
 
 impl From<[u8; 4]> for Rgba {
+	#[inline]
 	#[must_use]
 	fn from(array: [u8; 4]) -> Self {
 		Self {
@@ -43,15 +45,20 @@ impl From<[u8; 4]> for Rgba {
 }
 
 impl Rgba {
+	#[inline]
 	#[must_use]
 	pub fn new(r: u8, g: u8, b: u8, a: u8) -> Self {
 		Self { r, g, b, a }
 	}
 
+	#[inline]
+	#[must_use]
 	pub fn black() -> Self {
 		Self::new(0, 0, 0, 255)
 	}
 
+	#[inline]
+	#[must_use]
 	pub fn white() -> Self {
 		Self::new(255, 255, 255, 255)
 	}
@@ -83,6 +90,7 @@ impl PixelBuf {
 		buf
 	}
 
+	#[inline]
 	#[must_use]
 	pub fn new_test_image(size: [usize; 2]) -> Self {
 		Self::new_from_fn(size, |x, y| match (x + y) % 4 {
@@ -94,25 +102,30 @@ impl PixelBuf {
 		})
 	}
 
+	#[inline]
 	#[must_use]
 	pub fn get_pixel(&self, x: usize, y: usize) -> &Rgba {
 		&self[(x, y)]
 	}
 
+	#[inline]
 	pub fn set_pixel(&mut self, x: usize, y: usize, color: Rgba) {
 		self[(x, y)] = color;
 	}
 
+	#[inline]
 	#[must_use]
 	pub fn is_in_bounds(&self, x: usize, y: usize) -> bool {
 		x < self.size[0] && y < self.size[1]
 	}
 
+	#[inline]
 	#[must_use]
 	pub fn get_scaled_size(&self, scale: usize) -> [usize; 2] {
 		[self.size[0] * scale, self.size[1] * scale]
 	}
 
+	#[inline]
 	#[must_use]
 	pub fn get_size(&self) -> [usize; 2] {
 		self.size
@@ -167,6 +180,7 @@ impl PixelBuf {
 		pixels
 	}
 
+	#[inline]
 	pub fn clear(&mut self, color: Rgba) {
 		for pixel in &mut self.pixels {
 			*pixel = color;
