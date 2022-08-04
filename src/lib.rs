@@ -144,6 +144,29 @@ impl PixelBuf {
 		pixels
 	}
 
+	#[must_use]
+	pub fn get_buf(&self) -> Vec<u8> {
+		let (width, height) = (self.size[0], self.size[1]);
+
+		let mut pixels = vec![0; width * height * 4];
+
+		let mut i = 0;
+		for y in 0..height {
+			for x in 0..width {
+				let pixel = self.get_pixel(x, y);
+
+				pixels[i] = pixel.r;
+				pixels[i + 1] = pixel.g;
+				pixels[i + 2] = pixel.b;
+				pixels[i + 3] = pixel.a;
+
+				i += 4;
+			}
+		}
+
+		pixels
+	}
+
 	pub fn clear(&mut self, color: Rgba) {
 		for pixel in &mut self.pixels {
 			*pixel = color;
