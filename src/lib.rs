@@ -45,22 +45,23 @@ impl From<[u8; 4]> for Rgba {
 }
 
 impl Rgba {
+	pub const WHITE: Rgba = Rgba {
+		r: 255,
+		g: 255,
+		b: 255,
+		a: 255,
+	};
+	pub const BLACK: Rgba = Rgba {
+		r: 0,
+		g: 0,
+		b: 0,
+		a: 255,
+	};
+
 	#[inline]
 	#[must_use]
 	pub fn new(r: u8, g: u8, b: u8, a: u8) -> Self {
 		Self { r, g, b, a }
-	}
-
-	#[inline]
-	#[must_use]
-	pub fn black() -> Self {
-		Self::new(0, 0, 0, 255)
-	}
-
-	#[inline]
-	#[must_use]
-	pub fn white() -> Self {
-		Self::new(255, 255, 255, 255)
 	}
 }
 
